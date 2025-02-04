@@ -14,6 +14,8 @@ import React from "react";
 import { LatestInfos } from "./infos";
 import { ListItem } from "./list-item";
 
+// TODO: Dynamic Course
+
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Alert Dialog",
@@ -105,6 +107,9 @@ export default async function Navigation() {
                 </ListItem>
                 <ListItem title="Kurse" href="/user">
                   Meine Kurse
+                </ListItem>
+                <ListItem title="Zertifikate" href="/user">
+                  Meine Zertifikate
                 </ListItem>
                 <ListItem
                   title="Abmelden"
