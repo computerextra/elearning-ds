@@ -15,6 +15,7 @@ import { LatestInfos } from "./infos";
 import { ListItem } from "./list-item";
 
 // TODO: Dynamic Course
+// TODO: Links anpassen
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -98,8 +99,14 @@ export default async function Navigation() {
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                 {!session.user.name && (
-                  <ListItem title="Namen vergeben" href="/user/edit">
-                    Du hast noch keinen Namen eingegeben.
+                  <ListItem
+                    title="Namen vergeben"
+                    href="/user/edit"
+                    className="bg-destructive text-white hover:bg-destructive hover:text-white focus:bg-destructive focus:text-white dark:text-primary hover:dark:text-primary focus:dark:text-primary"
+                  >
+                    <span className="text-white">
+                      Du hast noch keinen Namen eingegeben.
+                    </span>
                   </ListItem>
                 )}
                 <ListItem title="Profil" href="/user">
@@ -114,7 +121,7 @@ export default async function Navigation() {
                 <ListItem
                   title="Abmelden"
                   href="/api/auth/signout"
-                  className="hover:bg-destructive hover:text-white focus:bg-destructive focus:text-white"
+                  className="hover:bg-destructive hover:text-white focus:bg-destructive focus:text-white hover:dark:text-primary focus:dark:text-primary"
                 ></ListItem>
               </ul>
             </NavigationMenuContent>
@@ -126,6 +133,49 @@ export default async function Navigation() {
                 Anmelden
               </NavigationMenuLink>
             </Link>
+          </NavigationMenuItem>
+        )}
+        {session?.user.role === "Geschäftsführung" && (
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Geschäftsführung</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                <ListItem title="Profil" href="/user">
+                  Mitarbeiter Auswertungen
+                </ListItem>
+                <ListItem title="Kurse" href="/user">
+                  Zertifikate Auswertungen
+                </ListItem>
+                <ListItem title="Zertifikate" href="/user">
+                  Benutzer Verwalten
+                </ListItem>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        )}
+        {session?.user.role === "Admin" && (
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Admin</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                <ListItem title="Profil" href="/user">
+                  Infos Verwalten
+                </ListItem>
+                <ListItem title="Kurse" href="/user">
+                  Kurse Verwalten
+                </ListItem>
+                <ListItem title="Zertifikate" href="/user">
+                  Benutzer Verwalten
+                </ListItem>
+                <ListItem
+                  title="Abmelden"
+                  href="/api/auth/signout"
+                  className="hover:bg-destructive hover:text-white focus:bg-destructive focus:text-white"
+                >
+                  Rollen Verwalten
+                </ListItem>
+              </ul>
+            </NavigationMenuContent>
           </NavigationMenuItem>
         )}
       </NavigationMenuList>
