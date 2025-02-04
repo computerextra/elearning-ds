@@ -7,10 +7,12 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
 import { auth } from "@/server/auth";
+import { api } from "@/trpc/server";
 import Link from "next/link";
 import React from "react";
+import { LatestInfos } from "./infos";
+import { ListItem } from "./list-item";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -52,6 +54,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export default async function Navigation() {
   const session = await auth();
+  await api.info.getLatest.prefetch();
 
   return (
     <NavigationMenu className="mx-auto">
@@ -66,33 +69,7 @@ export default async function Navigation() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Infos</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <Link
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      shadcn/ui
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Beautifully designed components built with Radix UI and
-                      Tailwind CSS.
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-              <ListItem href="/docs" title="Introduction">
-                Re-usable components built using Radix UI and Tailwind CSS.
-              </ListItem>
-              <ListItem href="/docs/installation" title="Installation">
-                How to install dependencies and structure your app.
-              </ListItem>
-              <ListItem href="/docs/primitives/typography" title="Typography">
-                Styles for headings, paragraphs, lists...etc
-              </ListItem>
-            </ul>
+            <LatestInfos />
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -113,16 +90,27 @@ export default async function Navigation() {
         </NavigationMenuItem>
         {session ? (
           <NavigationMenuItem>
-            <NavigationMenuTrigger>{session.user.name}</NavigationMenuTrigger>
+            <NavigationMenuTrigger>
+              {session.user.name ?? "Benutzer"}
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                {!session.user.name && (
+                  <ListItem title="Namen vergeben" href="/user/edit">
+                    Du hast noch keinen Namen eingegeben.
+                  </ListItem>
+                )}
                 <ListItem title="Profil" href="/user">
                   Mein Profil verwalten
                 </ListItem>
                 <ListItem title="Kurse" href="/user">
                   Meine Kurse
                 </ListItem>
-                <ListItem title="Abmelden" href="/api/auth/signout"></ListItem>
+                <ListItem
+                  title="Abmelden"
+                  href="/api/auth/signout"
+                  className="hover:bg-destructive hover:text-white focus:bg-destructive focus:text-white"
+                ></ListItem>
               </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
@@ -139,29 +127,3 @@ export default async function Navigation() {
     </NavigationMenu>
   );
 }
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className,
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  );
-});
-ListItem.displayName = "ListItem";
