@@ -1,6 +1,16 @@
 # Datenschutz Training
 
+# Requirements
+
+- latest NodeJS Version
+- latest PNPM Version
+
 ## How to
+
+- Create .env file and fill all the Varables from .env-example
+- install all dependencies with `pnpm install`
+- push your database with `pnpm db:push`
+- start development environment with `pnpm dev`
 
 ## Notes 04.02.2025
 
