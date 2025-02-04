@@ -28,22 +28,25 @@ model Post {
 
 // Necessary for Next auth
 model Account {
-    id                       String  @id @default(cuid())
+    id                       String   @id @default(cuid())
     userId                   String
     type                     String
     provider                 String
     providerAccountId        String
-    refresh_token            String? @db.Text
-    access_token             String? // @db.Text
+    refresh_token            String?  @db.Text
+    access_token             String?  @db.Text
     expires_at               Int?
     token_type               String?
     scope                    String?
-    id_token                 String? // @db.Text
+    id_token                 String?  @db.Text
     session_state            String?
-    user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     refresh_token_expires_in Int?
+    createdAt                DateTime @default(now())
+    updatedAt                DateTime @updatedAt
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -52,6 +55,10 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@index([userId])
 }
 
 model User {
@@ -60,9 +67,13 @@ model User {
     email         String?   @unique
     emailVerified DateTime?
     image         String?
+    role          Role      @relation(fields: [roleId], references: [id])
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    roleId        String
+    createdAt     DateTime  @default(now())
+    updatedAt     DateTime  @updatedAt
 }
 
 model VerificationToken {
@@ -71,4 +82,10 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model Role {
+    id   String @id @default(cuid())
+    name String
+    User User[]
 }
