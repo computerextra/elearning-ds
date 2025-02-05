@@ -1,5 +1,16 @@
 "use client";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,8 +22,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { UploadButton } from "@/lib/uploadthing";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -80,45 +93,25 @@ export default function UserEdit({ id }: { id: string }) {
                   <AvatarImage src={user?.image ?? ""} />
                   <AvatarFallback>NI</AvatarFallback>
                 </Avatar>
-                {/* TODO: Upload Button für Bild einbauen // Bei Upload das Bild in der DB mit Link hinterlegen */}
-                <input
-                  type="file"
-                  name="profile"
-                  id="upload_profile"
-                  hidden
-                  required
-                />
 
-                <label
-                  htmlFor="upload_profile"
-                  className="inline-flex items-center"
-                >
-                  <svg
-                    data-slot="icon"
-                    className="h-5 w-5"
-                    fill="none"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z"
-                    ></path>
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z"
-                    ></path>
-                  </svg>
-                </label>
+                <UploadButton
+                  endpoint="imageUploader"
+                  onClientUploadComplete={(res) => {
+                    if (res[0])
+                      updateProfilePicture.mutate({
+                        id: id,
+                        picture: res[0].url,
+                      });
+                  }}
+                  onUploadError={(error: Error) => {
+                    // Do something with the error.
+                    alert(`ERROR! ${error.message}`);
+                  }}
+                />
+                <span className="text-xs">
+                  Achtung: Hochgeladene Bilder werden in den USA gespeichert!
+                </span>
               </div>
-              <button className="rounded-lg bg-indigo-800 px-4 py-2 text-white ring ring-gray-300 transition-colors duration-300 hover:bg-blue-900 hover:ring-indigo-300">
-                Change Profile Picture
-              </button>
             </div>
           </div>
 
@@ -176,6 +169,33 @@ export default function UserEdit({ id }: { id: string }) {
             </form>
           </Form>
         </div>
+
+        <h2 className="mb-5 mt-12 text-4xl font-bold text-destructive">
+          Danger Zone
+        </h2>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" className="uppercase">
+              Account Löschen
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Bist du wirklich sicher?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Wenn du deinen Account löschst, werden auch alle Zertifikate und
+                jeder Fortschritt in diesem Portal gelöscht. Diese Aktion kann
+                nicht mehr Rückgangig gemacht werden!
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+              <AlertDialogAction className="uppercase" asChild>
+                <Link href="/user/delete">Trotzdem löschen</Link>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );

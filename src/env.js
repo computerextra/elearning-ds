@@ -17,6 +17,7 @@ export const env = createEnv({
     EMAIL_SERVER_PORT: z.coerce.number().int(),
     EMAIL_FROM: z.string(),
     DATABASE_URL: z.string().url(),
+    UPLOADTHING_TOKEN: z.string(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -43,6 +44,7 @@ export const env = createEnv({
     EMAIL_SERVER_PORT: process.env.EMAIL_SERVER_PORT,
     EMAIL_FROM: process.env.EMAIL_FROM,
     DATABASE_URL: process.env.DATABASE_URL,
+    UPLOADTHING_TOKEN: process.env.UPLOADTHING_TOKEN,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
