@@ -76,6 +76,7 @@ model Info {
     name        String
     description String
     body        String   @db.Text
+    readtime    String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
 }

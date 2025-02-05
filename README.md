@@ -14,7 +14,7 @@
 
 ## Notes 04.02.2025
 
-- [ ] Einen Text Editor finden, der als Editor und Previewer genutzt werden kann und den Text in eine Datenbank sichern könnte.
+- [x] Einen Text Editor finden, der als Editor und Previewer genutzt werden kann und den Text in eine Datenbank sichern könnte.
 - [ ] Bilder Upload einbinden? Uploadthing?
 - [ ] Weg finden, damit die Links von den Bildern ohne Webinterface abgerufen werden können.
   - [ ] Links in die DB?
