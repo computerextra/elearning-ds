@@ -20,21 +20,19 @@ import {
   thematicBreakPlugin,
   toolbarPlugin,
   UndoRedo,
-  type MDXEditorMethods,
 } from "@mdxeditor/editor";
 import "@mdxeditor/editor/style.css";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function InfoCreate() {
-  const ref = useRef<MDXEditorMethods>(null);
   const router = useRouter();
 
   const utils = api.useUtils();
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [body, setBody] = useState("");
-  const createeInfo = api.info.create.useMutation({
+  const createInfo = api.info.create.useMutation({
     onSuccess: async () => {
       await utils.info.invalidate();
       router.push("/info");
@@ -51,7 +49,11 @@ export default function InfoCreate() {
           className="mt-12 space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
-            createeInfo.mutate({ body, description, name });
+            createInfo.mutate({
+              body: body,
+              description: description,
+              name: name,
+            });
           }}
         >
           <Input
@@ -68,7 +70,6 @@ export default function InfoCreate() {
           />
           <MDXEditor
             markdown={body}
-            ref={ref}
             onChange={setBody}
             plugins={[
               headingsPlugin(),
@@ -92,8 +93,8 @@ export default function InfoCreate() {
               }),
             ]}
           />
-          <Button type="submit" disabled={createeInfo.isPending}>
-            {createeInfo.isPending ? "Speichere ..." : "Speichern"}
+          <Button type="submit" disabled={createInfo.isPending}>
+            {createInfo.isPending ? "Speichere ..." : "Speichern"}
           </Button>
         </form>
       </>

@@ -48,7 +48,7 @@ export const infoRouter = createTRPCRouter({
         data: {
           name: input.name,
           description: input.description,
-          body: input.name,
+          body: input.body,
           readtime: calcReadTime(input.body),
         },
       });
