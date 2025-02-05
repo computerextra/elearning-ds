@@ -158,21 +158,8 @@ export default async function Navigation() {
             <NavigationMenuTrigger>Admin</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                <ListItem title="Profil" href="/user">
-                  Infos Verwalten
-                </ListItem>
-                <ListItem title="Kurse" href="/user">
-                  Kurse Verwalten
-                </ListItem>
                 <ListItem title="Zertifikate" href="/user">
                   Benutzer Verwalten
-                </ListItem>
-                <ListItem
-                  title="Abmelden"
-                  href="/api/auth/signout"
-                  className="hover:bg-destructive hover:text-white focus:bg-destructive focus:text-white"
-                >
-                  Rollen Verwalten
                 </ListItem>
               </ul>
             </NavigationMenuContent>
