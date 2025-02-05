@@ -1,8 +1,8 @@
-import { api } from "@/trpc/server";
-import Info from "./_components/info";
-import { auth } from "@/server/auth";
 import { Button } from "@/components/ui/button";
+import { auth } from "@/server/auth";
+import { api } from "@/trpc/server";
 import Link from "next/link";
+import Info from "./_components/info";
 
 export default async function Page({
   params,

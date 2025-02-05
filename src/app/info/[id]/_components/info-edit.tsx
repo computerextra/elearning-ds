@@ -1,29 +1,6 @@
 "use client";
 
-import { api } from "@/trpc/react";
-import {
-  BoldItalicUnderlineToggles,
-  CreateLink,
-  MDXEditor,
-  toolbarPlugin,
-  UndoRedo,
-  headingsPlugin,
-  quotePlugin,
-  listsPlugin,
-  thematicBreakPlugin,
-  tablePlugin,
-  InsertTable,
-  InsertThematicBreak,
-  ListsToggle,
-  BlockTypeSelect,
-  linkDialogPlugin,
-  type MDXEditorMethods,
-} from "@mdxeditor/editor";
-import { useEffect, useRef, useState } from "react";
-import "@mdxeditor/editor/style.css";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import BackButton from "@/app/_components/BackButton";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -35,7 +12,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import BackButton from "@/app/_components/BackButton";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { api } from "@/trpc/react";
+import {
+  BlockTypeSelect,
+  BoldItalicUnderlineToggles,
+  CreateLink,
+  headingsPlugin,
+  InsertTable,
+  InsertThematicBreak,
+  linkDialogPlugin,
+  listsPlugin,
+  ListsToggle,
+  MDXEditor,
+  quotePlugin,
+  tablePlugin,
+  thematicBreakPlugin,
+  toolbarPlugin,
+  UndoRedo,
+  type MDXEditorMethods,
+} from "@mdxeditor/editor";
+import "@mdxeditor/editor/style.css";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 
 export default function InfoEdit({ id }: { id: string }) {
   const infoLoader = api.info.get.useQuery({ id });

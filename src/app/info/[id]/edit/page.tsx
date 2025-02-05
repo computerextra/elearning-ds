@@ -1,5 +1,5 @@
-import { api } from "@/trpc/server";
 import { auth } from "@/server/auth";
+import { api } from "@/trpc/server";
 import InfoEdit from "../_components/info-edit";
 
 export default async function Page({

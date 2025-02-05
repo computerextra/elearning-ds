@@ -33,6 +33,26 @@ export const infoRouter = createTRPCRouter({
 
       return info ?? null;
     }),
+  create: protectedProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        description: z.string(),
+        body: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (ctx.session.user.role !== "Admin") return null;
+
+      return ctx.db.info.create({
+        data: {
+          name: input.name,
+          description: input.description,
+          body: input.name,
+          readtime: calcReadTime(input.body),
+        },
+      });
+    }),
   update: protectedProcedure
     .input(
       z.object({

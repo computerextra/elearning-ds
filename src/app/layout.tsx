@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
+import { TRPCReactProvider } from "@/trpc/react";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { TRPCReactProvider } from "@/trpc/react";
 import Navigation from "./_components/navigation-menu";
 import { ThemeProvider } from "./_components/theme-provider";
 import { ModeToggle } from "./_components/theme-toggle";
