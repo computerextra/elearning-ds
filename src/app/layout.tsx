@@ -36,15 +36,17 @@ export default function RootLayout({
 
             <div className="min-h-[80vh]">{children}</div>
             {/* TODO: Footer Styling */}
-            <footer className="min-h-[10vh] w-full border-t">
-              <p>
+            <footer className="container mx-auto min-h-[10vh] border-t">
+              <p className="text-center text-sm text-muted-foreground">
                 &copy; 2024 - {new Date().getFullYear()} Computer Extra GmbH |
                 Design von Johannes Kirchner
               </p>
-              {/* TODO: Impressum erstellen */}
-              <Link href="/">Impressum</Link>
-              {/* TODO: Datenschutz erstellen */}
-              <Link href="/">Datenschutz</Link>
+              <div className="mt-5 flex justify-around">
+                {/* TODO: Impressum erstellen */}
+                <Link href="/Impressum">Impressum</Link>
+                {/* TODO: Datenschutz erstellen */}
+                <Link href="/Datenschutz">Datenschutz</Link>
+              </div>
             </footer>
           </TRPCReactProvider>
         </ThemeProvider>
