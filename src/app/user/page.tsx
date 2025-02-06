@@ -35,7 +35,7 @@ export default async function Page() {
         <div className="col-span-4 sm:col-span-9">
           <div className="rounded-lg p-6 shadow">
             {/* TODO: Dynamisch befüllen! */}
-            <h2 className="mb-4 mt-6 text-xl font-bold">Meine Kurse</h2>
+            <h2 className="mb-4 mt-6 text-xl font-bold">Meine Zertifikate</h2>
             <div className="mb-6">
               <div className="flex w-full flex-wrap justify-between gap-2">
                 <span className="font-bold text-muted-foreground">
@@ -91,7 +91,67 @@ export default async function Page() {
               </p>
             </div>
             {/* TODO: Dynamisch befüllen! */}
-            <h2 className="mb-4 mt-6 text-xl font-bold">Meine Zertifikate</h2>
+            <h2 className="mb-4 mt-6 text-xl font-bold">
+              Meine Kurse in Bearbeitung
+            </h2>
+            <div className="mb-6">
+              <div className="flex w-full flex-wrap justify-between gap-2">
+                <span className="font-bold text-muted-foreground">
+                  Web Developer
+                </span>
+                <p>
+                  <span className="mr-2 text-muted-foreground">
+                    at ABC Company
+                  </span>
+                  <span className="text-muted-foreground">2017 - 2019</span>
+                </p>
+              </div>
+              <p className="mt-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                finibus est vitae tortor ullamcorper, ut vestibulum velit
+                convallis. Aenean posuere risus non velit egestas suscipit.
+              </p>
+            </div>
+            <div className="mb-6">
+              <div className="flex w-full flex-wrap justify-between gap-2">
+                <span className="font-bold text-muted-foreground">
+                  Web Developer
+                </span>
+                <p>
+                  <span className="mr-2 text-muted-foreground">
+                    at ABC Company
+                  </span>
+                  <span className="text-muted-foreground">2017 - 2019</span>
+                </p>
+              </div>
+              <p className="mt-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                finibus est vitae tortor ullamcorper, ut vestibulum velit
+                convallis. Aenean posuere risus non velit egestas suscipit.
+              </p>
+            </div>
+            <div className="mb-6">
+              <div className="flex w-full flex-wrap justify-between gap-2">
+                <span className="font-bold text-muted-foreground">
+                  Web Developer
+                </span>
+                <p>
+                  <span className="mr-2 text-muted-foreground">
+                    at ABC Company
+                  </span>
+                  <span className="text-muted-foreground">2017 - 2019</span>
+                </p>
+              </div>
+              <p className="mt-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                finibus est vitae tortor ullamcorper, ut vestibulum velit
+                convallis. Aenean posuere risus non velit egestas suscipit.
+              </p>
+            </div>
+            {/* TODO: Dynamisch befüllen! */}
+            <h2 className="mb-4 mt-6 text-xl font-bold">
+              Meine Abgeschlossenen Kurse
+            </h2>
             <div className="mb-6">
               <div className="flex w-full flex-wrap justify-between gap-2">
                 <span className="font-bold text-muted-foreground">
