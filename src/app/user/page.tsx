@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/server/auth";
 import { api } from "@/trpc/server";
 import Link from "next/link";
+import ErrorPage from "../_components/ErrorPage";
 import DoneCourses from "./_components/DoneCourses";
 import FailedCourses from "./_components/FailedCourses";
 import UndoneCourses from "./_components/UndoneCourses";
@@ -13,8 +14,7 @@ export default async function Page() {
   await api.course.getFailed.prefetch();
   await api.course.getUnDone.prefetch();
 
-  // TODO: Fehler Seite
-  if (!session) return <>Nicht angemeldet</>;
+  if (!session) return <ErrorPage msg="Nicht angemeldet" />;
 
   return (
     <div className="container mx-auto py-8">

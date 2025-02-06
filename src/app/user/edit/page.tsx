@@ -1,11 +1,11 @@
+import ErrorPage from "@/app/_components/ErrorPage";
 import { auth } from "@/server/auth";
 import UserEdit from "./edit-user";
 
 export default async function Page() {
   const session = await auth();
 
-  // TODO: Fehlerseite
-  if (!session) return <>Nicht angemeldet</>;
+  if (!session) return <ErrorPage msg="Nicht angemeldet" />;
 
   return <UserEdit id={session.user.id} />;
 }
