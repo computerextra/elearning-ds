@@ -8,6 +8,7 @@ export default async function Home() {
     <HydrateClient>
       <main className="container mx-auto">
         <h1 className="mt-24 text-center">Datenschutz Training</h1>
+        {session && <h2 className="text-center">Hallo {session.user.name}</h2>}
       </main>
     </HydrateClient>
   );
