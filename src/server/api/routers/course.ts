@@ -2,11 +2,19 @@ import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const courseRouter = createTRPCRouter({
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.course.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }),
   getLatest: publicProcedure.query(async ({ ctx }) => {
     return ctx.db.course.findMany({
       orderBy: {
         createdAt: "desc",
       },
+      take: 5,
     });
   }),
   get: protectedProcedure
