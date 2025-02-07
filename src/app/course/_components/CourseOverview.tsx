@@ -17,7 +17,7 @@ export default function CouseOverview() {
   const [courses] = api.course.getAll.useSuspenseQuery();
 
   return (
-    <div className="container mx-auto mt-12">
+    <div className="container mx-auto mb-12 mt-12">
       <h1 className="text-center">Alle Kurse</h1>
 
       <div className="mt-8 grid grid-cols-2 gap-4">
