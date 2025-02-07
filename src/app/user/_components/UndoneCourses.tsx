@@ -1,12 +1,11 @@
 "use client";
 
+import Loading from "@/app/_components/Loading";
 import { api } from "@/trpc/react";
 import CourseList from "./courseList";
 
 export default function UndoneCourses() {
   const courseLoader = api.course.getUnDone.useQuery();
-
-  // TODO: Loading Placeholder
 
   return (
     <>
@@ -14,7 +13,7 @@ export default function UndoneCourses() {
         Meine Kurse in Bearbeitung
       </h2>
       {courseLoader.isLoading ? (
-        <>Loading</>
+        <Loading />
       ) : (
         <CourseList courses={courseLoader.data} />
       )}

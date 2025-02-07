@@ -1,6 +1,7 @@
 "use client";
 
 import BackButton from "@/app/_components/BackButton";
+import Loading from "@/app/_components/Loading";
 import { api } from "@/trpc/react";
 import {
   headingsPlugin,
@@ -16,7 +17,7 @@ import "@mdxeditor/editor/style.css";
 export default function Info({ id }: { id: string }) {
   const infoLoader = api.info.get.useQuery({ id });
 
-  if (infoLoader.isLoading) return <>Loading</>;
+  if (infoLoader.isLoading) return <Loading />;
 
   const info = infoLoader.data;
   console.log(JSON.stringify(info?.body));
