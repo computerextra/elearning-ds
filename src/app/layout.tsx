@@ -4,7 +4,6 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import Link from "next/link";
 import CookieConsentBanner from "./_components/CookieConsentBanner";
-import CookieSettings from "./_components/CookieSettings";
 import Navigation from "./_components/navigation-menu";
 import { ThemeProvider } from "./_components/theme-provider";
 import { ModeToggle } from "./_components/theme-toggle";
@@ -47,7 +46,6 @@ export default function RootLayout({
                 <Link href="/Impressum">Impressum</Link>
                 {/* TODO: Datenschutz erstellen */}
                 <Link href="/Datenschutz">Datenschutz</Link>
-                <CookieSettings />
               </div>
             </footer>
           </TRPCReactProvider>

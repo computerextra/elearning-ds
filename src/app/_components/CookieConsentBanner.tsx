@@ -18,8 +18,11 @@ import {
 } from "@/components/ui/table";
 import Datenschutz from "@/markdown/Datenschutz.mdx";
 import { CircleX } from "lucide-react";
-import { useState } from "react";
-import CookieConsent from "react-cookie-consent";
+import { useEffect, useState } from "react";
+import CookieConsent, {
+  getCookieConsentValue,
+  resetCookieConsentValue,
+} from "react-cookie-consent";
 
 type CookieTable = {
   Name: string;
@@ -61,77 +64,101 @@ const DrittanbieterCookies: CookieTable[] = [];
 export default function CookieConsentBanner() {
   const [optionaleCookies, setOptionaleCookies] = useState<string[]>([]);
   const [show, setShow] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+
+  useEffect(() => {
+    const consent = getCookieConsentValue("DatenschutzTrainingCookieConsent");
+    if (consent == "true") setShowSettings(true);
+    else setShowSettings(false);
+  }, []);
 
   const onAccept = () => {
     console.log("Accepted");
+    setShowSettings(true);
   };
   const onDecline = () => {
     console.log("Declined Optional Cookies");
   };
 
   return (
-    <CookieConsent
-      location="bottom"
-      buttonText={
-        optionaleCookies.length != optionaleCookies.length
-          ? "Ausgewähle Cookies Akzeptieren"
-          : "Alle Akzeptieren"
-      }
-      declineButtonText="Alle optionalen Ablehnen"
-      enableDeclineButton
-      overlay
-      cookieName="DatenschutzTrainingCookieConsent"
-      containerClasses=""
-      expires={365}
-      onAccept={onAccept}
-      onDecline={onDecline}
-    >
-      <div className="container">
-        <h2>Nutzung von Cookies: Wir benötigen Ihre Einwilligung</h2>
-        <p>
-          Wir verwenden auf dieser Webseite Cookies. Diese verarbeiten auf
-          personenbezogene Daten.
-        </p>
-        <p>Zum Einsatz kommen auf unserer Seite:</p>
-        <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
-          <li>Technisch Notwendige Cookues</li>
-          <li>Statistik Cookies</li>
-          <li>Cookies von Drittanbietern</li>
-        </ul>
-        <p>
-          Indem Sie auf die untere Tabelle klicken, erhalten Sie genauere
-          Informationen zu unseren Cookies und können diese nach Ihren eigenen
-          Bedürfnissen anpassen.
-        </p>
-        <p>
-          Durch einen Klick auf das Auswahlfeld &quot;Alle Akzeptieren&quot;
-          stimmen Sie der Verwendung aller Cookies zu, die in der unteren
-          Tabelle beschrieben werden.
-        </p>
-        <p>
-          Sie können Ihre Einwilligung zur Nutzung von Cookies zu jeder Zeit
-          ändern oder widerrufen
-        </p>
-        <p>Weitere Informationen finden Sie in unserer Datenschutzerklärung</p>
-        {show ? (
-          <>
-            <h1>Datenschutzerklärung</h1>
-            <Datenschutz />
-            <Button
-              onClick={() => setShow(false)}
-              variant="destructive"
-              className="mt-4"
-            >
-              <CircleX className="h-12 w-12" /> Schließen
-            </Button>
-          </>
-        ) : (
-          <></>
-        )}
-        <hr className="my-4" />
-        <CookieOverview setOptionaleCookies={setOptionaleCookies} />
-      </div>
-    </CookieConsent>
+    <>
+      <CookieConsent
+        location="bottom"
+        buttonText={
+          optionaleCookies.length != optionaleCookies.length
+            ? "Ausgewähle Cookies Akzeptieren"
+            : "Alle Akzeptieren"
+        }
+        declineButtonText="Alle optionalen Ablehnen"
+        enableDeclineButton
+        overlay
+        cookieName="DatenschutzTrainingCookieConsent"
+        containerClasses=""
+        expires={365}
+        onAccept={onAccept}
+        onDecline={onDecline}
+      >
+        <div className="container">
+          <h2>Nutzung von Cookies: Wir benötigen Ihre Einwilligung</h2>
+          <p>
+            Wir verwenden auf dieser Webseite Cookies. Diese verarbeiten auf
+            personenbezogene Daten.
+          </p>
+          <p>Zum Einsatz kommen auf unserer Seite:</p>
+          <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
+            <li>Technisch Notwendige Cookues</li>
+            <li>Statistik Cookies</li>
+            <li>Cookies von Drittanbietern</li>
+          </ul>
+          <p>
+            Indem Sie auf die untere Tabelle klicken, erhalten Sie genauere
+            Informationen zu unseren Cookies und können diese nach Ihren eigenen
+            Bedürfnissen anpassen.
+          </p>
+          <p>
+            Durch einen Klick auf das Auswahlfeld &quot;Alle Akzeptieren&quot;
+            stimmen Sie der Verwendung aller Cookies zu, die in der unteren
+            Tabelle beschrieben werden.
+          </p>
+          <p>
+            Sie können Ihre Einwilligung zur Nutzung von Cookies zu jeder Zeit
+            ändern oder widerrufen
+          </p>
+          <p>
+            Weitere Informationen finden Sie in unserer Datenschutzerklärung
+          </p>
+          {show ? (
+            <>
+              <h1>Datenschutzerklärung</h1>
+              <Datenschutz />
+              <Button
+                onClick={() => setShow(false)}
+                variant="destructive"
+                className="mt-4"
+              >
+                <CircleX className="h-12 w-12" /> Schließen
+              </Button>
+            </>
+          ) : (
+            <></>
+          )}
+          <hr className="my-4" />
+          <CookieOverview setOptionaleCookies={setOptionaleCookies} />
+        </div>
+      </CookieConsent>
+      {showSettings && (
+        <Button
+          className="fixed bottom-7 right-7"
+          variant="outline"
+          onClick={() => {
+            resetCookieConsentValue("DatenschutzTrainingCookieConsent");
+            location.reload();
+          }}
+        >
+          Cookie Einstellungen
+        </Button>
+      )}
+    </>
   );
 }
 
