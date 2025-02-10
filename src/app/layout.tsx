@@ -3,6 +3,8 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 import Link from "next/link";
+import CookieConsentBanner from "./_components/CookieConsentBanner";
+import CookieSettings from "./_components/CookieSettings";
 import Navigation from "./_components/navigation-menu";
 import { ThemeProvider } from "./_components/theme-provider";
 import { ModeToggle } from "./_components/theme-toggle";
@@ -28,13 +30,12 @@ export default function RootLayout({
             <div className="fixed right-4 top-4">
               <ModeToggle />
             </div>
-            {/* TODO: Cookie Banner */}
-            <div>
-              <p>Ich werde mal ein Cookie Banner</p>
-            </div>
+
+            <CookieConsentBanner />
             <Navigation />
 
             <div className="min-h-[80vh]">{children}</div>
+
             {/* TODO: Footer Styling */}
             <footer className="container mx-auto min-h-[10vh] border-t">
               <p className="text-center text-sm text-muted-foreground">
@@ -46,6 +47,7 @@ export default function RootLayout({
                 <Link href="/Impressum">Impressum</Link>
                 {/* TODO: Datenschutz erstellen */}
                 <Link href="/Datenschutz">Datenschutz</Link>
+                <CookieSettings />
               </div>
             </footer>
           </TRPCReactProvider>
