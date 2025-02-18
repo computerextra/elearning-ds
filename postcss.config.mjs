@@ -2,6 +2,7 @@
 const config = {
   plugins: {
     "@tailwindcss/postcss": {},
+    "postcss-hover-media-feature": {},
   },
 };
 
