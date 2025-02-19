@@ -3,7 +3,9 @@ import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
+import { auth } from "@/server/auth";
 import { TRPCReactProvider } from "@/trpc/react";
+import { Suspense } from "react";
 import { Dock } from "./_components/DockItem";
 import Navbar from "./_components/Navbar";
 
@@ -23,7 +25,13 @@ export default async function RootLayout({
     <html lang="de" className={`${GeistSans.variable}`}>
       <body>
         <TRPCReactProvider>
-          <Navbar />
+          <Suspense
+            fallback={
+              <div className="navbar bg-base-100 skeleton shadow-sm"></div>
+            }
+          >
+            <Navbar />
+          </Suspense>
           {children}
           <Dock />
         </TRPCReactProvider>

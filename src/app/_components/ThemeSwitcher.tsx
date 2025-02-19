@@ -159,7 +159,7 @@ export default function ThemeSwitcher() {
 
   return (
     <div className="dropdown dropdown-end block">
-      <div tabIndex={0} role="button" className="btn btn-sm btn-ghost">
+      <div tabIndex={0} role="button" className="btn btn-ghost">
         <svg
           width="20"
           height="20"
