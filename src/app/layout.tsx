@@ -22,7 +22,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="de" className={`${GeistSans.variable}`}>
-      <body className="bg-base-200 text-base-content min-h-[100vh] antialiased">
+      <body className="bg-base-100 text-base-content min-h-[100vh] antialiased">
         <TRPCReactProvider>
           <Suspense
             fallback={

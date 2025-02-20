@@ -17,6 +17,8 @@ declare module "next-auth" {
       // ...other properties
       // role: UserRole;
       consent: boolean;
+      admin: boolean;
+      chef: boolean;
     } & DefaultSession["user"];
   }
 

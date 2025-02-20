@@ -61,6 +61,8 @@ model User {
     emailVerified DateTime?
     image         String?
     consent       Boolean?
+    admin         Boolean   @default(false)
+    chef          Boolean   @default(false)
     accounts      Account[]
     sessions      Session[]
     posts         Post[]

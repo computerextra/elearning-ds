@@ -1,7 +1,7 @@
 import { auth } from "@/server/auth";
 import { api } from "@/trpc/server";
 import { redirect } from "next/navigation";
-import UserPage from "./user-page";
+import UserEdit from "./user-edit";
 
 export default async function Page() {
   const session = await auth();
@@ -9,5 +9,5 @@ export default async function Page() {
 
   if (!session) redirect("/");
 
-  return <UserPage />;
+  return <UserEdit />;
 }

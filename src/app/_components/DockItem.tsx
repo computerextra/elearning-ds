@@ -1,9 +1,9 @@
 "use client";
 
 import { cn } from "@/utils";
-import { House, Info, LucideProps, School } from "lucide-react";
+import { House, Info, type LucideProps, School } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export type DockLink = {
@@ -34,7 +34,6 @@ const MainLinks: DockLink[] = [
 
 function DockItem(link: DockLink) {
   const pathname = usePathname();
-  const router = useRouter();
 
   const active = pathname === link.href;
 
