@@ -1,3 +1,4 @@
+import { env } from "@/env";
 import { auth } from "@/server/auth";
 import Link from "next/link";
 import CookieBanner from "./CookieBanner";
@@ -42,7 +43,7 @@ export default async function Navbar() {
         </div>
 
         <Link href="/" className="btn btn-ghost text-xl">
-          Datenschurz
+          {env.NEXT_PUBLIC_APP_NAME}
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
