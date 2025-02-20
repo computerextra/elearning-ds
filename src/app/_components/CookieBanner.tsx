@@ -78,7 +78,10 @@ export default function CookieBanner() {
               </button>
             </form>
             <h3 className="text-lg font-bold">Wir nutzen Cookies</h3>
-            <p className="py-4">BLA BLA BLA COOKIES</p>
+            <p className="py-4">
+              {/* TODO: Text für Cookies */}
+              BLA BLA BLA COOKIES
+            </p>
             <div className="modal-action">
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
