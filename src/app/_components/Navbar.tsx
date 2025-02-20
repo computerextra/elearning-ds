@@ -1,5 +1,6 @@
 import { auth } from "@/server/auth";
 import Link from "next/link";
+import CookieBanner from "./CookieBanner";
 import { MobileNavLinks, NavLinks } from "./NavLinks";
 import ThemeSwitcher from "./ThemeSwitcher";
 
@@ -49,6 +50,7 @@ export default async function Navbar() {
       </div>
       <div className="navbar-end">
         {/* THEMES */}
+        <CookieBanner />
         <ThemeSwitcher />
         {/* PROFILE */}
         {session ? (
