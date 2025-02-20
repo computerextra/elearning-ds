@@ -24,6 +24,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
             <Link
               className="bg-accent hover:bg-secondary text-accent-content hover:text-secondary-content flex max-w-xs flex-col gap-4 rounded-xl p-4"
+              prefetch={true}
               href={session ? "/profile" : "/api/auth/signin"}
             >
               <h3 className="text-2xl font-bold">Erste Schritte →</h3>
@@ -35,6 +36,7 @@ export default async function Home() {
             </Link>
             <Link
               className="bg-accent hover:bg-secondary text-accent-content hover:text-secondary-content flex max-w-xs flex-col gap-4 rounded-xl p-4"
+              prefetch={true}
               href="/Info"
             >
               <h3 className="text-2xl font-bold">Infos →</h3>
@@ -44,6 +46,7 @@ export default async function Home() {
             </Link>
             <Link
               className="bg-accent hover:bg-secondary text-accent-content hover:text-secondary-content flex max-w-xs flex-col gap-4 rounded-xl p-4"
+              prefetch={true}
               href="/Info"
             >
               <h3 className="text-2xl font-bold">Kurse →</h3>

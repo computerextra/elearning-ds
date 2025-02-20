@@ -2,6 +2,7 @@
 
 import { cn } from "@/utils";
 import { House, Info, LucideProps, School } from "lucide-react";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
@@ -38,13 +39,14 @@ function DockItem(link: DockLink) {
   const active = pathname === link.href;
 
   return (
-    <button
+    <Link
       className={cn(active ? "dock-active" : "")}
-      onClick={() => router.push(link.href)}
+      prefetch={true}
+      href={link.href}
     >
       <link.icon />
       <span className="dock-label">{link.name}</span>
-    </button>
+    </Link>
   );
 }
 

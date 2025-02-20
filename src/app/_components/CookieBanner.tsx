@@ -9,7 +9,6 @@ export function cookieConsentGiven() {
   if (consent == null) {
     return "undecided";
   }
-
   return consent;
 }
 
@@ -37,6 +36,7 @@ export default function CookieBanner() {
 
     // Set Optional Cookies here!
     // TODO: Implement optional cookies
+    alert("Optional Cookies not implemented yet!");
   }, [consentGiven]);
 
   const handleAcceptAllCookies = () => {
@@ -60,24 +60,29 @@ export default function CookieBanner() {
   return (
     <>
       {showModal ? (
-        <dialog id="cookie_modal" className="modal">
+        <dialog
+          id="cookie_modal"
+          className="modal modal-bottom sm:modal-middle"
+        >
           <div className="modal-box">
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button
-                className="btn btn-sm btn-circle btn-ghost absolute top-2 right-2"
-                onClick={() => {
-                  const modal = document.getElementById(
-                    "cookie_modal",
-                  ) as HTMLDialogElement;
-                  if (modal == null) return;
-                  modal.close();
-                  setShowModal(false);
-                }}
-              >
-                ✕
-              </button>
-            </form>
+            {(consentGiven == "all" || consentGiven == "none") && (
+              <form method="dialog">
+                {/* if there is a button in form, it will close the modal */}
+                <button
+                  className="btn btn-sm btn-circle btn-ghost absolute top-2 right-2"
+                  onClick={() => {
+                    const modal = document.getElementById(
+                      "cookie_modal",
+                    ) as HTMLDialogElement;
+                    if (modal == null) return;
+                    modal.close();
+                    setShowModal(false);
+                  }}
+                >
+                  ✕
+                </button>
+              </form>
+            )}
             <h3 className="text-lg font-bold">Wir nutzen Cookies</h3>
             <p className="py-4">
               {/* TODO: Text für Cookies */}
@@ -86,7 +91,7 @@ export default function CookieBanner() {
             <div className="modal-action">
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
-                <div className="mt-4 flex gap-4">
+                <div className="mt-4 flex gap-2">
                   <Button variant="primary" onClick={handleAcceptAllCookies}>
                     Alle Akzeptieren
                   </Button>
