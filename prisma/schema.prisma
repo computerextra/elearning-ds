@@ -75,3 +75,13 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Info {
+    id          String   @id @default(cuid())
+    title       String
+    description String
+    body        String?  @db.Text
+    readTime    Int?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
