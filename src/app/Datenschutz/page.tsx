@@ -1,3 +1,7 @@
 export default function Page() {
-  return <>Datenschutz</>;
+  return (
+    <>
+      <h1 className="text-center">Datenschutz Erklärung</h1>
+    </>
+  );
 }
