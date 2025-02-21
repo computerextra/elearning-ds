@@ -80,7 +80,7 @@ export const infoRouter = createTRPCRouter({
     }),
   getLatest: publicProcedure.query(async ({ ctx }) => {
     const infos = await ctx.db.info.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: { updatedAt: "desc" },
       take: 5,
     });
     return infos ?? null;

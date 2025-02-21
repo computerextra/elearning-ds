@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingSpinner from "@/app/_components/LoadingSpinner";
 import TipTap from "@/app/_components/TipTap";
 import { api } from "@/trpc/react";
 import { Color } from "@tiptap/extension-color";
@@ -12,12 +13,7 @@ import { useEditor } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 
 export default function Info({ id }: { id: string }) {
-  const [info] = api.info.getOne.useSuspenseQuery({ id });
-
-  const tiptapJson = JSON.parse(info?.body ? info.body : "{}");
-  console.log(tiptapJson);
-  console.log(info?.body);
-  const nodes = tiptapJson.content;
+  const infoQuery = api.info.getOne.useQuery({ id });
 
   const editor = useEditor({
     extensions: [
@@ -40,15 +36,17 @@ export default function Info({ id }: { id: string }) {
           "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:soft-none",
       },
     },
-    content: nodes,
+    content: infoQuery.data?.body,
     editable: false,
   });
 
   return (
     <>
+      {infoQuery.isLoading && <LoadingSpinner />}
       <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-        {info?.title}
+        {infoQuery.data?.title}
       </h1>
+      <h2 className="text-3xl">{infoQuery.data?.description}</h2>
       <TipTap editor={editor} />
     </>
   );

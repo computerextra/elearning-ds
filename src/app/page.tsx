@@ -1,18 +1,13 @@
 import Link from "next/link";
 
-import { LatestPost } from "@/app/_components/post";
 import { env } from "@/env";
 import { auth } from "@/server/auth";
 import { api, HydrateClient } from "@/trpc/server";
-import { Button } from "./_components/ui/Button";
+
+import LatestInfos from "./latest-infos";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth();
-
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
 
   return (
     <HydrateClient>
@@ -37,7 +32,7 @@ export default async function Home() {
             <Link
               className="bg-accent hover:bg-secondary text-accent-content hover:text-secondary-content flex max-w-xs flex-col gap-4 rounded-xl p-4"
               prefetch={true}
-              href="/Info"
+              href="/info"
             >
               <h3 className="text-2xl font-bold">Infos →</h3>
               <div className="text-lg">
@@ -47,7 +42,7 @@ export default async function Home() {
             <Link
               className="bg-accent hover:bg-secondary text-accent-content hover:text-secondary-content flex max-w-xs flex-col gap-4 rounded-xl p-4"
               prefetch={true}
-              href="/Info"
+              href="/info"
             >
               <h3 className="text-2xl font-bold">Kurse →</h3>
               <div className="text-lg">
@@ -56,23 +51,14 @@ export default async function Home() {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-
             <div className="flex flex-col items-center justify-center gap-4">
               <p className="text-center text-2xl">
-                {session && <span>Logged in as {session.user?.name}</span>}
+                {session && <span>angemeldet als {session.user?.name}</span>}
               </p>
-              <Link href={session ? "/api/auth/signout" : "/api/auth/signin"}>
-                <Button variant="primary">
-                  {session ? "Abmelden" : "Anmelden"}
-                </Button>
-              </Link>
             </div>
           </div>
-
-          {session?.user && <LatestPost />}
+          <h2 className="text-3xl">Aktuelle Infos</h2>
+          <LatestInfos />
         </div>
       </main>
     </HydrateClient>
