@@ -42,7 +42,7 @@ export default async function Home() {
             <Link
               className="bg-accent hover:bg-secondary text-accent-content hover:text-secondary-content flex max-w-xs flex-col gap-4 rounded-xl p-4"
               prefetch={true}
-              href="/info"
+              href="/course"
             >
               <h3 className="text-2xl font-bold">Kurse →</h3>
               <div className="text-lg">
@@ -58,6 +58,8 @@ export default async function Home() {
             </div>
           </div>
           <h2 className="text-3xl">Aktuelle Infos</h2>
+          <LatestInfos />
+          <h2 className="text-3xl">Aktuelle Kurse</h2>
           <LatestInfos />
         </div>
       </main>

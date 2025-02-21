@@ -2,9 +2,10 @@
 
 import { api } from "@/trpc/react";
 import Link from "next/link";
+import LoadingSpinner from "../_components/LoadingSpinner";
 
 export default function UserPage() {
-  const [user] = api.user.getUserDetails.useSuspenseQuery();
+  const userQuery = api.user.getUserDetails.useQuery();
 
   return (
     <main className="flex flex-col items-center justify-center">
@@ -12,10 +13,11 @@ export default function UserPage() {
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           Dein Profil
         </h1>
-        {user?.admin && (
+        {userQuery.isLoading && <LoadingSpinner />}
+        {userQuery.data?.admin && (
           <h2 className="text-3xl tracking-tight">Du hast Admin Rechte</h2>
         )}
-        {user?.chef && (
+        {userQuery.data?.chef && (
           <h2 className="text-3xl tracking-tight">Du hast Chef Rechte</h2>
         )}
         <div className="grid-cols 1 grid gap-4 sm:grid-cols-2 md:gap-8">
@@ -48,7 +50,7 @@ export default function UserPage() {
               herunter.
             </div>
           </Link>
-          {user?.admin && (
+          {userQuery.data?.admin && (
             <Link
               prefetch={true}
               href="/admin"
@@ -58,7 +60,7 @@ export default function UserPage() {
               <div className="text-lg">Admin Kram</div>
             </Link>
           )}
-          {(user?.chef || user?.admin) && (
+          {(userQuery.data?.chef || userQuery.data?.admin) && (
             <Link
               prefetch={true}
               href="/chef"
