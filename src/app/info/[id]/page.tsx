@@ -19,7 +19,7 @@ export default async function Page({
         <Button className="ms-4 mt-4">Zur Übersicht</Button>
       </Link>
       <main className="flex flex-col items-center justify-center">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
+        <div className="container mb-12 flex flex-col items-center justify-center gap-12 px-4 py-16">
           {session?.user.admin && (
             <Link href={`/info/${id}/edit`}>
               <Button>Info bearbeiten</Button>
