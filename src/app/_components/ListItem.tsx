@@ -17,38 +17,77 @@ function getDateString(date: Date) {
 
 export default function ListItem({ info }: { info: Info }) {
   return (
-    <li className="list-row">
-      <div className="w-55">
-        <p className="truncate">
-          <Link href={`/info/${info.id}`} prefetch={true}>
-            {info.title}
-          </Link>
-        </p>
-        <p className="truncate text-xs font-semibold uppercase opacity-60">
-          {info.description}
-        </p>
-      </div>
-      <div className="text-xs opacity-60">
-        <p className="pb-1">&nbsp;</p>
-        <p>Lesezeit: {info.readTime} Minuten</p>
-      </div>
-      <div className="text-right text-xs opacity-60">
-        <p className="pb-1">
-          {diff(info.createdAt, info.updatedAt) ? (
-            `Letztes Update: ${getDateString(info.updatedAt)}`
-          ) : (
-            <>&nbsp;</>
-          )}
-        </p>
-        <p>Erstellt am: {getDateString(info.createdAt)}</p>
-      </div>
-      <div className="tooltip" data-tip="Artikel lesen">
-        <Link href={`/info/${info.id}`} prefetch={true}>
+    <>
+      <li className="list-row md:hidden">
+        <div>
+          <p className="truncate">
+            <Link href={`/info/${info.id}`} prefetch={true}>
+              {info.title}
+            </Link>
+          </p>
+          <p className="truncate text-xs font-semibold uppercase opacity-60">
+            {info.description}
+          </p>
+          <div className="text-xs opacity-60">
+            <p className="pb-1">&nbsp;</p>
+            <p>Lesezeit: {info.readTime} Minuten</p>
+          </div>
+          <div className="text-xs opacity-60">
+            <p className="pb-1">
+              {diff(info.createdAt, info.updatedAt) ? (
+                `Letztes Update: ${getDateString(info.updatedAt)}`
+              ) : (
+                <>&nbsp;</>
+              )}
+            </p>
+            <p>Erstellt am: {getDateString(info.createdAt)}</p>
+          </div>
+        </div>
+
+        <Link
+          href={`/info/${info.id}`}
+          prefetch={true}
+          className="justify-self-end"
+        >
           <button className="btn btn-circle btn-ghost">
             <ArrowBigRightDash />
           </button>
         </Link>
-      </div>
-    </li>
+      </li>
+
+      <li className="list-row hidden md:grid">
+        <div className="w-55">
+          <p className="truncate">
+            <Link href={`/info/${info.id}`} prefetch={true}>
+              {info.title}
+            </Link>
+          </p>
+          <p className="truncate text-xs font-semibold uppercase opacity-60">
+            {info.description}
+          </p>
+        </div>
+        <div className="text-xs opacity-60">
+          <p className="pb-1">&nbsp;</p>
+          <p>Lesezeit: {info.readTime} Minuten</p>
+        </div>
+        <div className="text-right text-xs opacity-60">
+          <p className="pb-1">
+            {diff(info.createdAt, info.updatedAt) ? (
+              `Letztes Update: ${getDateString(info.updatedAt)}`
+            ) : (
+              <>&nbsp;</>
+            )}
+          </p>
+          <p>Erstellt am: {getDateString(info.createdAt)}</p>
+        </div>
+        <div className="tooltip" data-tip="Artikel lesen">
+          <Link href={`/info/${info.id}`} prefetch={true}>
+            <button className="btn btn-circle btn-ghost">
+              <ArrowBigRightDash />
+            </button>
+          </Link>
+        </div>
+      </li>
+    </>
   );
 }
