@@ -55,17 +55,19 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String       @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?      @unique
     emailVerified DateTime?
     image         String?
     consent       Boolean?
-    admin         Boolean   @default(false)
-    chef          Boolean   @default(false)
+    admin         Boolean      @default(false)
+    chef          Boolean      @default(false)
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    Enrollment    Enrollment[]
+    Result        Result[]
 }
 
 model VerificationToken {
@@ -77,11 +79,65 @@ model VerificationToken {
 }
 
 model Info {
-    id          String   @id @default(cuid())
+    id            String          @id @default(cuid())
+    title         String
+    description   String
+    body          String?         @db.Text
+    readTime      Int?
+    createdAt     DateTime        @default(now())
+    updatedAt     DateTime        @updatedAt
+    CourseContent CourseContent[]
+}
+
+model Course {
+    id          String          @id @default(cuid())
     title       String
     description String
-    body        String?  @db.Text
-    readTime    Int?
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    createdAt   DateTime        @default(now())
+    updatedAt   DateTime        @updatedAt
+    Content     CourseContent[]
+    Enrollment  Enrollment[]
+    Result      Result[]
+    Quiz        Quiz[]
+}
+
+model CourseContent {
+    id       String  @id @default(cuid())
+    type     String // Video, Image, Text, Document
+    data     String
+    Course   Course? @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    courseId String?
+    Info     Info?   @relation(fields: [infoId], references: [id])
+    infoId   String?
+}
+
+model Enrollment {
+    id                String   @id @default(cuid())
+    user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId            String
+    course            Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    courseId          String
+    enrollmentDate    DateTime
+    completuionStatus Int // Completion Status in percent
+}
+
+model Result {
+    id       String @id @default(cuid())
+    user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    quiz     Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+    score    Int
+    userId   String
+    courseId String
+    quizId   String
+}
+
+model Quiz {
+    id          String   @id @default(cuid())
+    course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    title       String
+    description String
+    totalMarks  Int
+    Result      Result[]
+    courseId    String
 }
