@@ -58,7 +58,7 @@ export default function UserPage() {
               <div className="text-lg">Admin Kram</div>
             </Link>
           )}
-          {(user?.chef ?? user?.admin) && (
+          {(user?.chef || user?.admin) && (
             <Link
               prefetch={true}
               href="/chef"
