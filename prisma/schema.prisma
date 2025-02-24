@@ -15,11 +15,11 @@ datasource db {
 }
 
 model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    createdBy   User   @relation(fields: [createdById], references: [id])
+    id          Int      @id @default(autoincrement())
+    name        String
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+    createdBy   User     @relation(fields: [createdById], references: [id])
     createdById String
 
     @@index([name])
@@ -33,11 +33,11 @@ model Account {
     provider                 String
     providerAccountId        String
     refresh_token            String? @db.Text
-    access_token             String? // @db.Text
+    access_token             String? @db.Text
     expires_at               Int?
     token_type               String?
     scope                    String?
-    id_token                 String? // @db.Text
+    id_token                 String? @db.Text
     session_state            String?
     user                     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
     refresh_token_expires_in Int?
@@ -54,17 +54,19 @@ model Session {
 }
 
 model User {
-    id            String       @id @default(cuid())
+    id            String        @id @default(cuid())
     name          String?
-    email         String?      @unique
+    email         String?       @unique
     emailVerified DateTime?
     image         String?
     consent       Boolean?
-    admin         Boolean      @default(false)
-    chef          Boolean      @default(false)
+    admin         Boolean       @default(false)
+    chef          Boolean       @default(false)
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    Enrollment    Enrollment[]
+    Certificate   Certificate[]
 }
 
 model VerificationToken {
@@ -76,12 +78,78 @@ model VerificationToken {
 }
 
 model Info {
-    id            String          @id @default(cuid())
-    title         String
-    description   String
-    body          String?         @db.Text
-    readTime      Int?
-    createdAt     DateTime        @default(now())
-    updatedAt     DateTime        @updatedAt
+    id          String   @id @default(cuid())
+    title       String
+    description String
+    body        String?  @db.Text
+    readTime    Int?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
 }
 
+model Course {
+    id           String        @id @default(cuid())
+    title        String
+    description  String
+    neededPoints Int
+    infos        Material[]
+    quiz         Quiz[]
+    Enrollment   Enrollment[]
+    Certificate  Certificate[]
+}
+
+model Material {
+    id       String  @id @default(cuid())
+    title    String
+    type     String // Text, Image or Video 
+    url      String? // in case of video/image
+    body     String? // in case of Text
+    Course   Course? @relation(fields: [courseId], references: [id])
+    courseId String?
+}
+
+model Quiz {
+    id        String     @id @default(cuid())
+    title     String
+    points    Int
+    course    Course?    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    courseId  String?
+    questions Question[]
+}
+
+model Question {
+    id            String   @id @default(cuid())
+    title         String
+    points        Int
+    Quiz          Quiz?    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+    quizId        String?
+    answers       Answer[]
+    correctAnswer String
+}
+
+model Answer {
+    id         String    @id @default(cuid())
+    title      String
+    correct    Boolean
+    Question   Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    questionId String?
+}
+
+model Enrollment {
+    id          String    @id @default(cuid())
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+    startedAt   DateTime  @default(now())
+    completedAt DateTime?
+    userId      String
+    courseId    String
+}
+
+model Certificate {
+    id        String   @id @default(cuid())
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    course    Course   @relation(fields: [courseId], references: [id])
+    createdAt DateTime @default(now())
+    userId    String
+    courseId  String
+}

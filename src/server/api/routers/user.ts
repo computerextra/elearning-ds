@@ -7,6 +7,10 @@ export const userRouter = createTRPCRouter({
       where: {
         id: ctx.session.user.id,
       },
+      include: {
+        Enrollment: true,
+        Certificate: true,
+      },
     });
   }),
   getConsent: protectedProcedure.query(async ({ ctx }) => {
