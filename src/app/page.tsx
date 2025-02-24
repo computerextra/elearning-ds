@@ -2,9 +2,8 @@ import Link from "next/link";
 
 import { env } from "@/env";
 import { auth } from "@/server/auth";
-import { api, HydrateClient } from "@/trpc/server";
-
-import LatestInfos from "./latest-infos";
+import { HydrateClient } from "@/trpc/server";
+import { LatestCourses, LatestInfos } from "./latest";
 
 export default async function Home() {
   const session = await auth();
@@ -60,7 +59,7 @@ export default async function Home() {
           <h2 className="text-3xl">Aktuelle Infos</h2>
           <LatestInfos />
           <h2 className="text-3xl">Aktuelle Kurse</h2>
-          <LatestInfos />
+          <LatestCourses />
         </div>
       </main>
     </HydrateClient>

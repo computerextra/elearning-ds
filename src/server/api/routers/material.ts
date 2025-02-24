@@ -101,6 +101,10 @@ export const materialRouter = createTRPCRouter({
       });
     }),
   // GET
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.session.user.admin) return null;
+    return ctx.db.material.findMany();
+  }),
   getAllFromCourse: publicProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {

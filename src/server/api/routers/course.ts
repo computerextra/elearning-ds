@@ -97,6 +97,7 @@ export const courseRouter = createTRPCRouter({
         },
       });
     }),
+
   // Enroll
   enrollForUser: protectedProcedure
     .input(z.object({ id: z.string() }))
@@ -118,6 +119,20 @@ export const courseRouter = createTRPCRouter({
       },
     });
   }),
+  getUnEntrolled: protectedProcedure.query(async ({ ctx }) => {
+    const enrolled = await ctx.db.enrollment.findMany({
+      where: { id: ctx.session.user.id },
+    });
+    return ctx.db.course.findMany({
+      where: {
+        NOT: {
+          id: {
+            in: enrolled.map((x) => x.courseId),
+          },
+        },
+      },
+    });
+  }),
   setComplete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
@@ -126,7 +141,7 @@ export const courseRouter = createTRPCRouter({
           id: input.id,
         },
         data: {
-          completedArt: new Date(),
+          completedAt: new Date(),
         },
       });
     }),
@@ -137,7 +152,7 @@ export const courseRouter = createTRPCRouter({
           { userId: ctx.session.user.id },
           {
             NOT: {
-              completedArt: null,
+              completedAt: null,
             },
           },
         ],

@@ -27,6 +27,10 @@ export const quizRouter = createTRPCRouter({
       });
     }),
   // GET
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    if (!ctx.session.user.admin) return null;
+    return ctx.db.quiz.findMany();
+  }),
   get: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {

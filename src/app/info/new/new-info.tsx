@@ -22,7 +22,7 @@ export default function NewInfo() {
   const utils = api.useUtils();
   const createInfo = api.info.create.useMutation({
     onSuccess: async () => {
-      await utils.post.invalidate();
+      await utils.info.invalidate();
       router.push("/info");
     },
   });
